@@ -1,8 +1,11 @@
-import type { CityData } from '../types'
-import { updateCity } from './mutations'
-import { searchCities } from './queries'
-import { useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import type { CityData } from '../types'
+import type { ApolloError, QueryResult } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_CITIES } from './queries'
+import { UPDATE_CITY } from './mutations'
+
+type Maybe<T> = T | undefined
 
 interface CitiesFilter {
   filter: Partial<CityData>
@@ -16,72 +19,72 @@ interface CitiesResponse {
 }
 
 interface UpdateCity {
-  input: {
-    id: number
-    visited?: boolean
-    wishlist?: boolean
-  }
+  input: Partial<CityData> & { id: number }
 }
 
 interface MutationResponse {
   updateCity: CityData
 }
 
-type CityUpdateHook = (id: number, val: boolean) => [() => void, boolean]
+type CityToggleHook = (id: number, val: boolean) => [toggle: () => void, isLoading: boolean]
 
-export const useCitySearch = () => {
-  const { error, loading, data, refetch } = useQuery<CitiesResponse, CitiesFilter>(searchCities)
+type CityToggleHookFactory = (key: 'wishlist' | 'visited') => CityToggleHook
 
+type CitySearchHook = () => {
+  error: Maybe<ApolloError>
+  loading: boolean
+  data: Maybe<CitiesResponse>
+  runSearch: (cityName: string) => void
+}
+
+export const useCitySearch: CitySearchHook = () => {
+  const { error, loading, data, refetch } = useQuery<CitiesResponse, CitiesFilter>(GET_CITIES)
   return {
     error,
     loading,
     data,
-    runSearch: (name: string) => {
-      refetch({ filter: { name } })
-    },
+    runSearch: (name: string) => refetch({ filter: { name } }),
   }
 }
 
-export const useVisitedCities = () => {
-  return useQuery<CitiesResponse, CitiesFilter>(searchCities, {
+export const useVisitedCities = (): QueryResult<CitiesResponse, CitiesFilter> => {
+  return useQuery<CitiesResponse, CitiesFilter>(GET_CITIES, {
     variables: {
       filter: { visited: true },
     },
   })
 }
 
-export const useWishlistCities = () => {
-  return useQuery<CitiesResponse, CitiesFilter>(searchCities, {
+export const useWishlistCities = (): QueryResult<CitiesResponse, CitiesFilter> => {
+  return useQuery<CitiesResponse, CitiesFilter>(GET_CITIES, {
     variables: {
       filter: { wishlist: true },
     },
   })
 }
 
-const createToggleHook =
-  (key: 'wishlist' | 'visited'): CityUpdateHook =>
-  (id, currentValue) => {
-    const [mutate] = useMutation<MutationResponse, UpdateCity>(updateCity)
-    const [loading, setLoading] = useState(false)
+const createToggleHook: CityToggleHookFactory = key => (id, currentValue) => {
+  const [mutate] = useMutation<MutationResponse, UpdateCity>(UPDATE_CITY)
+  const [loading, setLoading] = useState(false)
 
-    const update = () => {
-      setLoading(true)
-      mutate({
-        variables: {
-          input: {
-            id,
-            [key]: !currentValue,
-          },
+  const update = () => {
+    setLoading(true)
+    mutate({
+      variables: {
+        input: {
+          id,
+          [key]: !currentValue,
         },
-        onCompleted: () => {
-          setLoading(false)
-        },
-        refetchQueries: [{ query: searchCities, variables: { filter: { [key]: true } } }],
-      })
-    }
-
-    return [update, loading]
+      },
+      onCompleted: () => {
+        setLoading(false)
+      },
+      refetchQueries: [{ query: GET_CITIES, variables: { filter: { [key]: true } } }],
+    })
   }
+
+  return [update, loading]
+}
 
 export const useToggleWishlist = createToggleHook('wishlist')
 export const useToggleVisited = createToggleHook('visited')

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-export const updateCity = gql`
+export const UPDATE_CITY = gql`
   mutation UpdateCity($input: CitiesMutationInput) {
     updateCity(input: $input) {
       id

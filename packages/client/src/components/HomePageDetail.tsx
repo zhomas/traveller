@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react'
+
 import type { FC } from 'react'
+import type { CityData } from '../types'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
   VStack,
@@ -12,7 +14,6 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react'
 import { City } from './City'
-import { CityData } from '../types'
 
 interface Props {
   heading: string
