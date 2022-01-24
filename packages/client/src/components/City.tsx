@@ -3,7 +3,7 @@ import React from 'react'
 import type { FC } from 'react'
 import type { CityData } from '../types'
 import { Box, Button, Flex, Text, Stack, useColorModeValue } from '@chakra-ui/react'
-import { useCityUpdateWishlist, useCityUpdateVisited } from '../graphql/hooks'
+import { useToggleWishlist, useToggleVisited } from '../graphql/hooks'
 
 interface Props {
   city: CityData
@@ -11,9 +11,10 @@ interface Props {
 
 export const City: FC<Props> = ({ city }) => {
   const { id, wishlist, visited, name } = city
+  const [toggleWishList, wishlistLoading] = useToggleWishlist(id, wishlist)
+  const [toggleVisited, visitedLoading] = useToggleVisited(id, visited)
+
   const bg = useColorModeValue('gray.200', 'gray.700')
-  const [toggleWishList, wishlistLoading] = useCityUpdateWishlist(id, wishlist)
-  const [toggleVisited, visitedLoading] = useCityUpdateVisited(id, visited)
 
   return (
     <Box padding={5} bg={bg} data-cy={name.toLowerCase()}>

@@ -12,7 +12,7 @@
     "dev:api": "cd packages/api && yarn dev",
     "start:all": "concurrently \"yarn start:client\" \"yarn start:api\" --names CLIENT,API -c blue,green",
     "dev:all": "concurrently \"yarn start:client\" \"yarn dev:api\" --names CLIENT,API -c blue,green",
-    "cy:run": "$(yarn bin)/cypress open",
+    "cy:run": "$(yarn bin)/cypress run",
     "test:cy": "start-server-and-test start:all http://localhost:3000 cy:run"
   },
   "devDependencies": {

@@ -58,7 +58,7 @@ export const useWishlistCities = () => {
   })
 }
 
-const createUpdateHook =
+const createToggleHook =
   (key: 'wishlist' | 'visited'): CityUpdateHook =>
   (id, currentValue) => {
     const [mutate] = useMutation<MutationResponse, UpdateCity>(updateCity)
@@ -76,15 +76,12 @@ const createUpdateHook =
         onCompleted: () => {
           setLoading(false)
         },
-        refetchQueries: [
-          { query: searchCities, variables: { filter: { visited: true } } },
-          { query: searchCities, variables: { filter: { wishlist: true } } },
-        ],
+        refetchQueries: [{ query: searchCities, variables: { filter: { [key]: true } } }],
       })
     }
 
     return [update, loading]
   }
 
-export const useCityUpdateWishlist = createUpdateHook('wishlist')
-export const useCityUpdateVisited = createUpdateHook('visited')
+export const useToggleWishlist = createToggleHook('wishlist')
+export const useToggleVisited = createToggleHook('visited')

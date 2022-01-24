@@ -24,19 +24,20 @@ export const HomePageDetail: FC<Props> = ({ heading, cities, runSearch }) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    runSearch(searchTerm)
     e.preventDefault()
+    runSearch(searchTerm)
   }
 
-  const grid = useMemo(() => {
-    return (
+  const grid = useMemo(
+    () => (
       <SimpleGrid columns={2} gap={5} data-cy="items-grid">
         {cities.map(city => (
           <City key={city.id} city={city} />
         ))}
       </SimpleGrid>
-    )
-  }, [cities])
+    ),
+    [cities],
+  )
 
   return (
     <VStack spacing="8">
