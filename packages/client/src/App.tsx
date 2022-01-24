@@ -1,11 +1,12 @@
-import React from 'react'
+import * as React from 'react'
 import type { FC } from 'react'
+
 import { ChakraProvider, Box, extendTheme } from '@chakra-ui/react'
 import { Route, Routes } from 'react-router-dom'
-import { TopBar } from './TopBar'
-import { Home } from './Home'
-import { WishList } from './WishList'
-import { Visited } from './Visited'
+import { TopBar } from './components/TopBar'
+import { Home } from './pages/Home'
+import { WishList } from './pages/WishList'
+import { Visited } from './pages/Visited'
 
 const fonts = {
   heading:

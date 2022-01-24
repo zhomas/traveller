@@ -14,8 +14,7 @@ export const TopBar: FC = () => {
       alignItems="center"
       borderBottom="1px solid #E8E8E8"
       marginBottom="3rem"
-      padding="0.5rem"
-    >
+      padding="0.5rem">
       <Link to="/">
         <Image src={image} alt="smart logo" maxHeight="7" />
       </Link>
