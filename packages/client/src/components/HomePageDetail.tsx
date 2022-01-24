@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import type { FC } from 'react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -16,16 +16,21 @@ import { CityData } from '../types'
 
 interface Props {
   heading: string
-  searchTerm: string
-  onSubmit: React.FormEventHandler
-  onInputChange: React.ChangeEventHandler
   cities: CityData[]
+  runSearch: (name: string) => void
 }
 
-export const HomePageDetail: FC<Props> = ({ heading, searchTerm, cities, onSubmit, onInputChange }) => {
+export const HomePageDetail: FC<Props> = ({ heading, cities, runSearch }) => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    runSearch(searchTerm)
+    e.preventDefault()
+  }
+
   const grid = useMemo(() => {
     return (
-      <SimpleGrid columns={2} gap={5}>
+      <SimpleGrid columns={2} gap={5} data-cy="items-grid">
         {cities.map(city => (
           <City key={city.id} city={city} />
         ))}
@@ -39,7 +44,7 @@ export const HomePageDetail: FC<Props> = ({ heading, searchTerm, cities, onSubmi
       <Container maxW="container.md">
         <form onSubmit={onSubmit}>
           <InputGroup>
-            <Input onChange={onInputChange} value={searchTerm} />
+            <Input onChange={e => setSearchTerm(e.target.value)} value={searchTerm} data-cy="home-searchbox" />
             <InputRightElement children={<IconButton aria-label="" icon={<Search2Icon />} type="submit" />} />
           </InputGroup>
         </form>

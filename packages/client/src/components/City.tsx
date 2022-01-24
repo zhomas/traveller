@@ -16,7 +16,7 @@ export const City: FC<Props> = ({ city }) => {
   const [toggleVisited, visitedLoading] = useCityUpdateVisited(id, visited)
 
   return (
-    <Box padding={5} bg={bg}>
+    <Box padding={5} bg={bg} data-cy={name.toLowerCase()}>
       <Flex justifyContent={'space-between'}>
         <Text>{name}</Text>
         <Stack>

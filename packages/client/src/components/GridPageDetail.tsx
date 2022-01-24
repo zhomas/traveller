@@ -15,7 +15,7 @@ export const GridPageDetail: FC<Props> = ({ heading, cities }) => {
     <VStack spacing={10}>
       <Heading as="h1">{heading}</Heading>
       <Container maxW="container.md">
-        <SimpleGrid columns={2} spacing={5}>
+        <SimpleGrid columns={2} spacing={5} data-cy="items-grid">
           {cities.map(city => (
             <Box key={city.id} bg={bg} padding={5}>
               <Text>{city.name}</Text>
