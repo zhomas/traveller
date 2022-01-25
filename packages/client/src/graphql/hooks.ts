@@ -26,7 +26,10 @@ interface MutationResponse {
   updateCity: CityData
 }
 
-type CityToggleHook = (id: number, val: boolean) => [toggle: () => void, isLoading: boolean]
+type CityToggleHook = (
+  id: number,
+  val: boolean,
+) => [toggle: () => void, isLoading: boolean]
 
 type CityToggleHookFactory = (key: 'wishlist' | 'visited') => CityToggleHook
 
@@ -38,7 +41,9 @@ type CitySearchHook = () => {
 }
 
 export const useCitySearch: CitySearchHook = () => {
-  const { error, loading, data, refetch } = useQuery<CitiesResponse, CitiesFilter>(GET_CITIES)
+  const { error, loading, data, refetch } = useQuery<CitiesResponse, CitiesFilter>(
+    GET_CITIES,
+  )
   return {
     error,
     loading,
@@ -67,7 +72,7 @@ const createToggleHook: CityToggleHookFactory = key => (id, currentValue) => {
   const [mutate] = useMutation<MutationResponse, UpdateCity>(UPDATE_CITY)
   const [loading, setLoading] = useState(false)
 
-  const update = () => {
+  const toggleFn = () => {
     setLoading(true)
     mutate({
       variables: {
@@ -83,7 +88,7 @@ const createToggleHook: CityToggleHookFactory = key => (id, currentValue) => {
     })
   }
 
-  return [update, loading]
+  return [toggleFn, loading]
 }
 
 export const useToggleWishlist = createToggleHook('wishlist')

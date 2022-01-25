@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import type { FC } from 'react'
 
-import { GridPageDetail } from '../components/GridPageDetail'
-import { useVisitedCities } from '../graphql/hooks'
+import { useVisitedCities } from '../graphql'
+import { GridPageDetail } from '../components'
 
 export const Visited: FC = () => {
   const { data, loading, error } = useVisitedCities()

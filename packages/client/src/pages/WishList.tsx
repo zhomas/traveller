@@ -1,8 +1,8 @@
 import * as React from 'react'
 import type { FC } from 'react'
 
-import { GridPageDetail } from '../components/GridPageDetail'
-import { useWishlistCities } from '../graphql/hooks'
+import { useWishlistCities } from '../graphql'
+import { GridPageDetail } from '../components'
 
 export const WishList: FC = () => {
   const { data, loading, error } = useWishlistCities()

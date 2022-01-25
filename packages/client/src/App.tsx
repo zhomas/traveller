@@ -3,7 +3,7 @@ import type { FC } from 'react'
 
 import { ChakraProvider, Box, extendTheme } from '@chakra-ui/react'
 import { Route, Routes } from 'react-router-dom'
-import { TopBar } from './components/TopBar'
+import { TopBar } from './components'
 import { Home, WishList, Visited } from './pages'
 
 const fonts = {

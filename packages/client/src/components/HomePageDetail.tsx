@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 
 import type { FC } from 'react'
 import type { CityData } from '../types'
+import { CityDetail } from '.'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
   VStack,
@@ -13,7 +14,6 @@ import {
   IconButton,
   SimpleGrid,
 } from '@chakra-ui/react'
-import { City } from './City'
 
 interface Props {
   heading: string
@@ -33,7 +33,7 @@ export const HomePageDetail: FC<Props> = ({ heading, cities, runSearch }) => {
     () => (
       <SimpleGrid columns={2} gap={5} data-cy="items-grid">
         {cities.map(city => (
-          <City key={city.id} city={city} />
+          <CityDetail key={city.id} city={city} />
         ))}
       </SimpleGrid>
     ),
@@ -46,8 +46,14 @@ export const HomePageDetail: FC<Props> = ({ heading, cities, runSearch }) => {
       <Container maxW="container.md">
         <form onSubmit={onSubmit}>
           <InputGroup>
-            <Input onChange={e => setSearchTerm(e.target.value)} value={searchTerm} data-cy="home-searchbox" />
-            <InputRightElement children={<IconButton aria-label="" icon={<Search2Icon />} type="submit" />} />
+            <Input
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              data-cy="home-searchbox"
+            />
+            <InputRightElement
+              children={<IconButton aria-label="" icon={<Search2Icon />} type="submit" />}
+            />
           </InputGroup>
         </form>
       </Container>

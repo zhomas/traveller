@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Box, HStack, Image, useColorMode, Link as ChakraLink } from '@chakra-ui/react'
-import { ColorModeSwitcher } from './ColorModeSwitcher'
+import { ColorModeSwitcher } from '.'
 
 export const TopBar: FC = () => {
   const { colorMode } = useColorMode()

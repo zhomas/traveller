@@ -51,7 +51,7 @@
     "semi": false,
     "singleQuote": true,
     "jsxSingleQuote": false,
-    "printWidth": 120,
+    "printWidth": 90,
     "bracketSameLine": true,
     "trailingComma": "all"
   }

@@ -2,7 +2,15 @@ import React from 'react'
 import type { FC } from 'react'
 import type { CityData } from '../types'
 
-import { Container, Heading, SimpleGrid, Box, useColorModeValue, Text, VStack } from '@chakra-ui/react'
+import {
+  Container,
+  Heading,
+  SimpleGrid,
+  Box,
+  useColorModeValue,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 
 interface Props {
   heading: string
@@ -11,6 +19,7 @@ interface Props {
 
 export const GridPageDetail: FC<Props> = ({ heading, cities }) => {
   const bg = useColorModeValue('gray.200', 'gray.700')
+
   return (
     <VStack spacing={10}>
       <Heading as="h1">{heading}</Heading>

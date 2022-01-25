@@ -9,7 +9,7 @@ interface Props {
   city: CityData
 }
 
-export const City: FC<Props> = ({ city }) => {
+export const CityDetail: FC<Props> = ({ city }) => {
   const { id, wishlist, visited, name } = city
   const [toggleWishList, wishlistLoading] = useToggleWishlist(id, wishlist)
   const [toggleVisited, visitedLoading] = useToggleVisited(id, visited)
