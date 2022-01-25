@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Box, HStack, Image, useColorMode, Link as ChakraLink } from '@chakra-ui/react'
-import { ColorModeSwitcher } from './ColorModeSwitcher'
+import { ColorModeSwitcher } from '.'
 
 export const TopBar: FC = () => {
   const { colorMode } = useColorMode()
@@ -14,8 +14,7 @@ export const TopBar: FC = () => {
       alignItems="center"
       borderBottom="1px solid #E8E8E8"
       marginBottom="3rem"
-      padding="0.5rem"
-    >
+      padding="0.5rem">
       <Link to="/">
         <Image src={image} alt="smart logo" maxHeight="7" />
       </Link>
